@@ -37,6 +37,7 @@ import com.example.lunchtray.ui.AccompanimentMenuScreen
 import com.example.lunchtray.ui.CheckoutScreen
 import com.example.lunchtray.ui.EntreeMenuScreen
 import com.example.lunchtray.ui.OrderViewModel
+import com.example.lunchtray.ui.SideDishMenuScreen
 import com.example.lunchtray.ui.StartOrderScreen
 
 // TODO: Screen enum
@@ -94,6 +95,16 @@ fun LunchTrayApp() {
                     }
                 )
             }
+            composable(route = LunchTrayScreen.SideDish.name){
+               SideDishMenuScreen(
+                   options = DataSource.sideDishMenuItems,
+                   onCancelButtonClicked = { viewModel.resetOrder() },
+                   onNextButtonClicked = { navController.navigate(LunchTrayScreen.Accompaniment.name) },
+                   onSelectionChanged = {item ->
+                       viewModel.updateSideDish(item)
+                   }
+               )
+            }
             composable(route = LunchTrayScreen.Accompaniment.name){
                 AccompanimentMenuScreen(
                     options = DataSource.accompanimentMenuItems,
@@ -104,6 +115,7 @@ fun LunchTrayApp() {
                     }
                 )
             }
+
             composable(route = LunchTrayScreen.Checkout.name){
                 CheckoutScreen(
                     orderUiState = uiState,
