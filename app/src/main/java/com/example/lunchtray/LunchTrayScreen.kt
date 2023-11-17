@@ -88,31 +88,46 @@ fun LunchTrayApp() {
             composable(route = LunchTrayScreen.Entree.name){
                 EntreeMenuScreen(
                     options = DataSource.entreeMenuItems,
-                    onCancelButtonClicked = {viewModel.resetOrder() },
+                    onCancelButtonClicked = {
+                        viewModel.resetOrder()
+                        navController.popBackStack(LunchTrayScreen.Start.name, inclusive = false)},
                     onNextButtonClicked = { navController.navigate(LunchTrayScreen.SideDish.name)},
                     onSelectionChanged = {item ->
                         viewModel.updateEntree(item)
-                    }
+                    } ,
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(innerPadding)
+
                 )
             }
             composable(route = LunchTrayScreen.SideDish.name){
                SideDishMenuScreen(
                    options = DataSource.sideDishMenuItems,
-                   onCancelButtonClicked = { viewModel.resetOrder() },
+                   onCancelButtonClicked = { viewModel.resetOrder()
+                       navController.popBackStack(LunchTrayScreen.Start.name, inclusive = false)},
                    onNextButtonClicked = { navController.navigate(LunchTrayScreen.Accompaniment.name) },
                    onSelectionChanged = {item ->
                        viewModel.updateSideDish(item)
-                   }
+                   },
+                   modifier = Modifier
+                       .verticalScroll(rememberScrollState())
+                       .padding(innerPadding)
                )
             }
             composable(route = LunchTrayScreen.Accompaniment.name){
                 AccompanimentMenuScreen(
                     options = DataSource.accompanimentMenuItems,
-                    onCancelButtonClicked = { viewModel.resetOrder() },
-                    onNextButtonClicked = {navController.navigate(LunchTrayScreen.Entree.name) },
+                    onCancelButtonClicked = {
+                        viewModel.resetOrder()
+                        navController.popBackStack(LunchTrayScreen.Start.name, inclusive = false)},
+                    onNextButtonClicked = {navController.navigate(LunchTrayScreen.Checkout.name) },
                     onSelectionChanged = {item ->
                         viewModel.updateAccompaniment(item)
-                    }
+                    },
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(innerPadding)
                 )
             }
 
